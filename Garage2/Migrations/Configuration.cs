@@ -32,7 +32,7 @@ using System.Linq;
 
         private DateTime RandomDate(Random rnd)
         {
-            return new DateTime(DateTime.Now.Ticks + rnd.Next(100000, 200000000));
+            return new DateTime(DateTime.Now.Ticks + rnd.Next(1000000000, 2000000000));
         }
 
         private VehicleType RandomType(Random rnd)
@@ -46,7 +46,6 @@ using System.Linq;
             v.RegNr = RandomRegNr(rnd);
             v.Owner = RandomName(rnd);
             v.DateIn = RandomDate(rnd);
-            v.DateOut = RandomDate(rnd);
             v.Type = RandomType(rnd);
             return v;
         }

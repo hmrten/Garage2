@@ -16,5 +16,12 @@ namespace Garage2.Controllers
         {
             return View(db.Vehicles);
         }
+
+        public ActionResult DeleteAll()
+        {
+            db.Vehicles.RemoveRange(db.Vehicles);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
