@@ -1,10 +1,10 @@
 namespace Garage2.Migrations
 {
     using Garage2.Models;
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Garage2.DataAccess.VehicleContext>
     {
@@ -18,7 +18,7 @@ using System.Linq;
             var s = new char[6];
             for (int i = 0; i < 3; ++i)
                 s[i] = (char)('A' + (rnd.Next() % 26));
-            for (int i=3; i<s.Length; ++i)
+            for (int i = 3; i < s.Length; ++i)
                 s[i] = (char)('0' + (rnd.Next() % 10));
             return new string(s);
         }
