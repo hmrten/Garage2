@@ -170,9 +170,9 @@
     <Compile Include="Migrations\201602111011195_Initial.Designer.cs">
       <DependentUpon>201602111011195_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602111401154_Vehicle2.cs" />
-    <Compile Include="Migrations\201602111401154_Vehicle2.Designer.cs">
-      <DependentUpon>201602111401154_Vehicle2.cs</DependentUpon>
+    <Compile Include="Migrations\201602111413528_finalVehicle.cs" />
+    <Compile Include="Migrations\201602111413528_finalVehicle.Designer.cs">
+      <DependentUpon>201602111413528_finalVehicle.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -254,8 +254,8 @@
     <EmbeddedResource Include="Migrations\201602111011195_Initial.resx">
       <DependentUpon>201602111011195_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602111401154_Vehicle2.resx">
-      <DependentUpon>201602111401154_Vehicle2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201602111413528_finalVehicle.resx">
+      <DependentUpon>201602111413528_finalVehicle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

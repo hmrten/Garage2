@@ -40,13 +40,14 @@ using System.Linq;
             return (VehicleType)rnd.Next(0, (int)VehicleType.Last);
         }
 
-        private Vehicle RandomVehicle(Random rnd)
+        private Vehicle RandomVehicle(Random rnd, int parkingSlotIndex)
         {
             var v = new Vehicle();
             v.RegNr = RandomRegNr(rnd);
             v.Owner = RandomName(rnd);
             v.DateIn = RandomDate(rnd);
             v.Type = RandomType(rnd);
+            v.ParkingSlotIndex = parkingSlotIndex;
             return v;
         }
 
@@ -55,7 +56,7 @@ using System.Linq;
             var rnd = new Random();
             for (int i = 0; i < 100; ++i)
             {
-                context.Vehicles.AddOrUpdate(v => v.RegNr, RandomVehicle(rnd));
+                context.Vehicles.AddOrUpdate(v => v.ParkingSlotIndex, RandomVehicle(rnd, i));
             }
             context.SaveChanges();
         }

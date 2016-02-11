@@ -24,5 +24,6 @@ namespace Garage2.Models
         public string RegNr { get; set; }
         public string Owner { get; set; }
         public DateTime DateIn { get; set; }
+        public int ParkingSlotIndex { get; set; }
     }
 }
