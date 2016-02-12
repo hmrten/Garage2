@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Garage2.ViewModels.Overview>
+
+@{
+    ViewBag.Title = "DisplayOverview";
+}
+
+<h2>DisplayOverview</h2>
+
+<p>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleReg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParkingSlotId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateIn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOut)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Duration)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleReg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParkingSlotId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateIn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateOut)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duration)
+        </td>
+    </tr>
+}
+
+</table>

@@ -167,6 +167,7 @@
       <DependentUpon>201602121208282_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ViewModels\Overview.cs" />
     <Compile Include="Models\Parking.cs" />
     <Compile Include="Models\ParkingSlot.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -215,6 +216,7 @@
     <Content Include="Views\Garage\Slots.cshtml" />
     <Content Include="Views\Garage\Vehicles.cshtml" />
     <Content Include="Views\Garage\Parkings.cshtml" />
+    <Content Include="Views\Garage\DisplayOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
