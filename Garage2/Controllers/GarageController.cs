@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Garage2.Models;
 
 namespace Garage2.Controllers
 {
@@ -32,5 +33,33 @@ namespace Garage2.Controllers
         {
             return View(db.Parkings);
         }
+
+        // GET: Items/Park
+        public ActionResult Park()
+        {
+            return View();
+        }
+
+        // POST: Items/Park
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Park([Bind(Include = "Reg,Type,Owner")] Vehicle vehicle)
+        {
+            if (ModelState.IsValid)
+            {
+                var item = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
+
+                if (item != null)
+                {
+                    db.Vehicles.Add(vehicle);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("Vehicles");
+            }
+
+            return View();
+        }
+
     }
 }

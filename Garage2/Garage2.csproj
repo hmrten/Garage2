@@ -213,6 +213,7 @@
     <Content Include="Views\Garage\Slots.cshtml" />
     <Content Include="Views\Garage\Vehicles.cshtml" />
     <Content Include="Views\Garage\Parkings.cshtml" />
+    <Content Include="Views\Garage\Park.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
