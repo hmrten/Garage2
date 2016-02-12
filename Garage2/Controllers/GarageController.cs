@@ -1,4 +1,6 @@
 ﻿using Garage2.DataAccess;
+using Garage2.Models;
+using Garage2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,6 +62,21 @@ namespace Garage2.Controllers
 
             return View();
         }
+
+
+		public ActionResult DisplayOverview() 
+		{
+			var joining = from vehicles in db.Vehicles
+						  join parrkings in db.Parkings
+						  on vehicles.Reg equals parrkings.VehicleReg
+						  select new Overview { VehicleReg = vehicles.Reg, ParkingSlotId = parrkings.ParkingSlotId, DateIn = parrkings.DateIn, DateOut = parrkings.DateOut, Type = vehicles.Type, Owner = vehicles.Owner};
+			var durlist = joining.ToList();
+			for (int i = 0; i < durlist.Count; i++) 
+			{
+				durlist[i].Duration = durlist[i].DateOut - durlist[i].DateIn;
+			}
+				return View(durlist);
+		}
 
     }
 }

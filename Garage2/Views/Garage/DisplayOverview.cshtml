@@ -1,13 +1,21 @@
-﻿@model IEnumerable<Garage2.Models.Parking>
+﻿@model IEnumerable<Garage2.ViewModels.Overview>
 
 @{
-    ViewBag.Title = "Parkings";
+    ViewBag.Title = "DisplayOverview";
 }
 
-<h2>Parkings</h2>
+<h2>DisplayOverview</h2>
 
+<p>
+</p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.VehicleReg)
         </th>
@@ -21,12 +29,19 @@
             @Html.DisplayNameFor(model => model.DateOut)
         </th>
         <th>
-            Duration
+            @Html.DisplayNameFor(model => model.Duration)
         </th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.VehicleReg)
         </td>
@@ -40,7 +55,7 @@
             @Html.DisplayFor(modelItem => item.DateOut)
         </td>
         <td>
-            @(item.DateOut - @item.DateIn)
+            @Html.DisplayFor(modelItem => item.Duration)
         </td>
     </tr>
 }

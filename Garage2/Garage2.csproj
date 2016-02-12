@@ -167,6 +167,7 @@
       <DependentUpon>201602121208282_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="ViewModels\Overview.cs" />
     <Compile Include="Models\Parking.cs" />
     <Compile Include="Models\ParkingSlot.cs" />
     <Compile Include="Models\Vehicle.cs" />
@@ -180,6 +181,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Graphics\post-74607-0-43142200-1366894842.jpg" />
+    <Content Include="Graphics\tire_ref.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -214,6 +217,7 @@
     <Content Include="Views\Garage\Vehicles.cshtml" />
     <Content Include="Views\Garage\Parkings.cshtml" />
     <Content Include="Views\Garage\Park.cshtml" />
+    <Content Include="Views\Garage\DisplayOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

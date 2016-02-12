@@ -22,3 +22,37 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.jumbotron 
+{
+    padding:0 0 0 0;
+    height:400px;
+    background-color:black;
+    border:solid;
+    border-top:none;
+    border-color:gray;
+}
+.jumbotron h1 
+{
+    position:relative;
+    top:-200px;
+    left:100px;
+    background-color:rgba(255, 255, 255,0.7);
+    color:rgb(0,0,0);
+    font-size:700%;
+    width:900px;
+
+}
+.lead 
+{
+    position:relative;
+    padding:0 0 0 0;
+    margin-bottom:0;
+    top:-150px;
+    background-color:rgba(255, 255, 255,0.7);
+    width:500px;
+}
+#bckgrdgraphline li
+{
+    display:inline;
+}
