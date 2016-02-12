@@ -6,58 +6,39 @@ namespace Garage2.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Garage2.DataAccess.VehicleContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Garage2.DataAccess.GarageContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        private string RandomRegNr(Random rnd)
+        protected override void Seed(Garage2.DataAccess.GarageContext context)
         {
-            var s = new char[6];
-            for (int i = 0; i < 3; ++i)
-                s[i] = (char)('A' + (rnd.Next() % 26));
-            for (int i = 3; i < s.Length; ++i)
-                s[i] = (char)('0' + (rnd.Next() % 10));
-            return new string(s);
-        }
+            context.Vehicles.AddOrUpdate(v => v.Reg,
+                new Vehicle { Reg = "AAA111", Type = VehicleType.Car, Owner = "John Smith" },
+                new Vehicle { Reg = "BBB222", Type = VehicleType.Car, Owner = "Joe Forester" },
+                new Vehicle { Reg = "CCC333", Type = VehicleType.Truck, Owner = "Bob Alison" },
+                new Vehicle { Reg = "DDD444", Type = VehicleType.Bus, Owner = "Alice Carter" },
+                new Vehicle { Reg = "EEE555", Type = VehicleType.Motorcycle, Owner = "Eve Dole" }
+                );
 
-        private string RandomName(Random rnd)
-        {
-            string[] fnames = { "John", "Joe", "Bob", "Alice", "Eve", "Chris" };
-            string[] lnames = { "Smith", "Forester", "Alison", "Carter", "Dole" };
-            return fnames[rnd.Next(0, fnames.Length)] + lnames[rnd.Next(0, lnames.Length)];
-        }
-
-        private DateTime RandomDate(Random rnd)
-        {
-            return new DateTime(DateTime.Now.Ticks + rnd.Next(1000000000, 2000000000));
-        }
-
-        private VehicleType RandomType(Random rnd)
-        {
-            return (VehicleType)rnd.Next(0, (int)VehicleType.Last);
-        }
-
-        private Vehicle RandomVehicle(Random rnd, int parkingSlotIndex)
-        {
-            var v = new Vehicle();
-            v.RegNr = RandomRegNr(rnd);
-            v.Owner = RandomName(rnd);
-            v.DateIn = RandomDate(rnd);
-            v.Type = RandomType(rnd);
-            v.ParkingSlotIndex = parkingSlotIndex;
-            return v;
-        }
-
-        protected override void Seed(Garage2.DataAccess.VehicleContext context)
-        {
-            var rnd = new Random();
-            for (int i = 0; i < 100; ++i)
+            if (context.ParkingSlots.Count() == 0)
             {
-                context.Vehicles.AddOrUpdate(v => v.ParkingSlotIndex, RandomVehicle(rnd, i));
+                for (int i = 0; i < 100; ++i)
+                {
+                    context.ParkingSlots.AddOrUpdate(new ParkingSlot { Occupied = false, VehicleReg = null });
+                }
+
+                context.Parkings.AddOrUpdate(
+                    new Parking { VehicleReg = "AAA111", ParkingSlotId = 0, DateIn = new DateTime(2016, 1, 1), DateOut = new DateTime(2016, 1, 2) },
+                    new Parking { VehicleReg = "BBB222", ParkingSlotId = 1, DateIn = new DateTime(2016, 1, 10), DateOut = new DateTime(2016, 1, 12) },
+                    new Parking { VehicleReg = "CCC333", ParkingSlotId = 2, DateIn = new DateTime(2016, 2, 1), DateOut = new DateTime(2016, 2, 2) },
+                    new Parking { VehicleReg = "DDD444", ParkingSlotId = 3, DateIn = new DateTime(2016, 2, 3), DateOut = new DateTime(2016, 2, 4) },
+                    new Parking { VehicleReg = "EEE555", ParkingSlotId = 4, DateIn = new DateTime(2016, 2, 5), DateOut = new DateTime(2016, 2, 6) }
+                    );
             }
+
             context.SaveChanges();
         }
     }

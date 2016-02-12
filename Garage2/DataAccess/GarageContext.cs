@@ -7,9 +7,10 @@ using System.Web;
 
 namespace Garage2.DataAccess
 {
-    public class VehicleContext : DbContext
+    public class GarageContext : DbContext
     {
+        public DbSet<ParkingSlot> ParkingSlots { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
-        public VehicleContext() : base("DefaultConnection") { }
+        public DbSet<Parking> Parkings { get; set; }
     }
 }

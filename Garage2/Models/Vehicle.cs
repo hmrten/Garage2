@@ -18,12 +18,13 @@ namespace Garage2.Models
 
     public class Vehicle
     {
-        [Key]
-        public int Id { get; set; }
+        [Key, StringLength(50), Display(Name = "Registration number")]
+        public string Reg { get; set; }
+
+        [Required]
         public VehicleType Type { get; set; }
-        public string RegNr { get; set; }
+
+        [Required, StringLength(100)]
         public string Owner { get; set; }
-        public DateTime DateIn { get; set; }
-        public int ParkingSlotIndex { get; set; }
     }
 }

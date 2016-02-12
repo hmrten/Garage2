@@ -1,31 +1,27 @@
-﻿@model IEnumerable<Garage2.Models.Vehicle>
+﻿@model IEnumerable<Garage2.Models.Parking>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Parkings";
 }
 
-<h2>Index</h2>
+<h2>Parkings</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create") |
-    @Html.ActionLink("Delete all", "DeleteAll")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.VehicleReg)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RegNr)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Owner)
+            @Html.DisplayNameFor(model => model.ParkingSlotId)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DateIn)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ParkingSlotIndex)
+            @Html.DisplayNameFor(model => model.DateOut)
         </th>
         <th></th>
     </tr>
@@ -33,19 +29,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(modelItem => item.VehicleReg)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RegNr)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Owner)
+            @Html.DisplayFor(modelItem => item.ParkingSlotId)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DateIn)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ParkingSlotIndex)
+            @Html.DisplayFor(modelItem => item.DateOut)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
