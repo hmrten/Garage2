@@ -78,5 +78,17 @@ namespace Garage2.Controllers
 				return View(durlist);
 		}
 
+        public ActionResult Index(string searchString)
+        {
+            var cars = from m in db.Vehicles
+                         select m;
+ 
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                cars = cars.Where(s => s.Owner.Contains(searchString));
+            }
+
+            return View(cars);
+        }
     }
 }

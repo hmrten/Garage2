@@ -21,7 +21,6 @@ namespace Garage2.ViewModels
 
 		[Display(Name = "Date out")]
 		public DateTime DateOut { get; set; }
-
 		
 		[Required, Display(Name ="Vehicle Type")]
 		public VehicleType Type { get; set; }

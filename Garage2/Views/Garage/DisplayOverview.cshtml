@@ -5,7 +5,19 @@
 }
 
 <h2>DisplayOverview</h2>
-
+@using (Html.BeginForm())
+{
+    <p>
+        Search: @Html.TextBox("SearchString") <br />
+        <br/>
+        <input type="submit" value="Submit" /> <br />
+        <br />
+        Filter: @*@Html.DropDownList()*@
+        <br />
+        <br />
+    </p>
+}
+ 
 <p>
 </p>
 <table class="table">
