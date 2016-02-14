@@ -8,11 +8,12 @@
 @using (Html.BeginForm())
 {
     <p>
-        Search: @Html.TextBox("SearchString") <br />
+        Search Owner or RegNr: @Html.TextBox("searchString") <br />
         <br/>
         <input type="submit" value="Submit" /> <br />
         <br />
-        Filter: @*@Html.DropDownList()*@
+        @*Filter: @Html.DropDownListFor(m => m.VehicleType,,"Choose one")
+                @Html.ValidationMessageFor(m => m)*@
         <br />
         <br />
     </p>
@@ -23,25 +24,25 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.ActionLink("Type", "DisplayOverview", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Owner)
+            @Html.ActionLink("Owner", "DisplayOverview", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VehicleReg)
+            @Html.ActionLink("VehicleReg", "DisplayOverview", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ParkingSlotId)
+            @Html.ActionLink("ParkingSlotId", "DisplayOverview", new { sortOrder = ViewBag.NameSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateIn)
+            @Html.ActionLink("DateIn", "DisplayOverview", new { sortOrder = ViewBag.DateSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateOut)
+            @Html.ActionLink("DateOut", "DisplayOverview", new { sortOrder = ViewBag.DateSortParm })
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Duration)
+            @Html.ActionLink("Duration", "DisplayOverview", new { sortOrder = ViewBag.DateSortParm })
         </th>
         <th></th>
     </tr>

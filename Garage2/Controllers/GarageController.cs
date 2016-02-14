@@ -64,21 +64,21 @@ namespace Garage2.Controllers
         }
 
 
-		public ActionResult DisplayOverview() 
-		{
-			var joining = from vehicles in db.Vehicles
-						  join parrkings in db.Parkings
-						  on vehicles.Reg equals parrkings.VehicleReg
-						  select new Overview { VehicleReg = vehicles.Reg, ParkingSlotId = parrkings.ParkingSlotId, DateIn = parrkings.DateIn, DateOut = parrkings.DateOut, Type = vehicles.Type, Owner = vehicles.Owner};
-			var durlist = joining.ToList();
-			for (int i = 0; i < durlist.Count; i++) 
-			{
-				durlist[i].Duration = durlist[i].DateOut - durlist[i].DateIn;
-			}
-				return View(durlist);
-		}
+        //public ActionResult DisplayOverview() 
+        //{
+        //    var joining = from vehicles in db.Vehicles
+        //                  join parrkings in db.Parkings
+        //                  on vehicles.Reg equals parrkings.VehicleReg
+        //                  select new Overview { VehicleReg = vehicles.Reg, ParkingSlotId = parrkings.ParkingSlotId, DateIn = parrkings.DateIn, DateOut = parrkings.DateOut, Type = vehicles.Type, Owner = vehicles.Owner};
+        //    var durlist = joining.ToList();
+        //    for (int i = 0; i < durlist.Count; i++) 
+        //    {
+        //        durlist[i].Duration = durlist[i].DateOut - durlist[i].DateIn;
+        //    }
+        //        return View(durlist);
+        //}
 
-        public ActionResult DisplayOverview(string searchString)
+        public ActionResult DisplayOverview(string searchString, string sortOrder)
         {
             var joining = from vehicles in db.Vehicles
                           join parrkings in db.Parkings
@@ -93,8 +93,42 @@ namespace Garage2.Controllers
             
             if (!String.IsNullOrEmpty(searchString))
             {
-                durlist = durlist.Where(s => s.Owner.Contains(searchString));
-                durlist = durlist.Where(s => s.VehicleReg.Contains(searchString));
+                durlist = durlist.Where(s => s.Owner.Contains(searchString) 
+                    || s.VehicleReg.Contains(searchString)).ToList();
+            }
+
+            //Search works, Sorting per column does not work, cannot figure out how to put list for filtering
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            switch (sortOrder)
+            {
+                case "Type":
+                    durlist  = durlist.OrderByDescending(s => s.Type).ToList();
+                    break;
+                case "Owner":
+                    durlist = durlist.OrderByDescending(s => s.Owner).ToList();
+                    break;
+                case "VehicleReg":
+                    durlist = durlist.OrderByDescending(s => s.VehicleReg).ToList();
+                    break;
+                case "ParkingSlotId":
+                    durlist = durlist.OrderByDescending(s => s.ParkingSlotId).ToList();
+                    break;
+                case "DateIn":
+                    durlist = durlist.OrderBy(s => s.DateIn).ToList();
+                    break;
+                case "DateOut":
+                    durlist = durlist.OrderBy(s => s.DateOut).ToList();
+                    break;
+                case "Duration":
+                    durlist = durlist.OrderBy(s => s.Duration).ToList();
+                    break;
+                default:
+                    durlist = durlist.OrderBy(s => s.Type).ToList();
+                    break;
+
+
             }
 
             return View(durlist);
