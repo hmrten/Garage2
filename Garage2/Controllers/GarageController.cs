@@ -50,16 +50,21 @@ namespace Garage2.Controllers
             if (ModelState.IsValid)
             {
                 var item = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
-
+        
                 if (item != null)
                 {
+                    item.Occupied = true;
+
+                    db.Parkings.Add(new Parking { VehicleReg = vehicle.Reg,
+                                                    ParkingSlotId = item.Id,
+                                                    DateIn = DateTime.Today,
+                                                    DateOut = new DateTime(2016, 2, 17) });
+
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
                 }
-
                 return RedirectToAction("Vehicles");
             }
-
             return View();
         }
 
