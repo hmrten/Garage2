@@ -78,17 +78,26 @@ namespace Garage2.Controllers
 				return View(durlist);
 		}
 
-        public ActionResult Index(string searchString)
+        public ActionResult DisplayOverview(string searchString)
         {
-            var cars = from m in db.Vehicles
-                         select m;
- 
+            var joining = from vehicles in db.Vehicles
+                          join parrkings in db.Parkings
+                          on vehicles.Reg equals parrkings.VehicleReg
+                          select new Overview { VehicleReg = vehicles.Reg, ParkingSlotId = parrkings.ParkingSlotId, DateIn = parrkings.DateIn, DateOut = parrkings.DateOut, Type = vehicles.Type, Owner = vehicles.Owner };
+            var durlist = joining.ToList();
+
+            for (int i = 0; i < durlist.Count; i++)
+            {
+                durlist[i].Duration = durlist[i].DateOut - durlist[i].DateIn;
+            }
+            
             if (!String.IsNullOrEmpty(searchString))
             {
-                cars = cars.Where(s => s.Owner.Contains(searchString));
+                durlist = durlist.Where(s => s.Owner.Contains(searchString));
+                durlist = durlist.Where(s => s.VehicleReg.Contains(searchString));
             }
 
-            return View(cars);
+            return View(durlist);
         }
     }
 }
