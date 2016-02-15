@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Garage2.Models;
 
 namespace Garage2.Controllers
 {
@@ -109,6 +108,12 @@ namespace Garage2.Controllers
 
             // Add TypeSortParm to Html.ActionLink
             ViewBag.TypeSortParm = sortOrder == "type" ? "type_desc" : "type";
+			ViewBag.OwnSortParm = sortOrder == "own" ? "owner_desc" : "own";
+			ViewBag.RegSortParm = sortOrder == "VehicleReg" ? "VehicleReg_desc" : "VehicleReg";
+			ViewBag.PIDSortParm = sortOrder == "ParkingSlotId" ? "ParkingSlotId_desc" : "ParkingSlotId";
+			ViewBag.DateInSortParm = sortOrder == "DateIn" ? "DateIn_desc" : "DateIn";
+			ViewBag.DateOutSortParm = sortOrder == "DateOut" ? "DateOut_desc" : "DateOut";
+			ViewBag.DurationSortParm = sortOrder == "Duration" ? "Duration_desc" : "Duration";
 
             switch (sortOrder)
             {
@@ -118,6 +123,47 @@ namespace Garage2.Controllers
                 case "type":
                     durlist = durlist.OrderBy(s => s.Type).ToList();
                     break;
+
+				case "owner_desc":
+					durlist = durlist.OrderByDescending(s => s.Owner).ToList();
+					break;
+				case "own":
+					durlist = durlist.OrderBy(s => s.Owner).ToList();
+					break;
+
+				case "VehicleReg_desc":
+					durlist = durlist.OrderByDescending(s => s.VehicleReg).ToList();
+					break;
+				case "VehicleReg":
+					durlist = durlist.OrderBy(s => s.VehicleReg).ToList();
+					break;
+
+				case "ParkingSlotId_desc":
+					durlist = durlist.OrderByDescending(s => s.ParkingSlotId).ToList();
+					break;
+				case "ParkingSlotId":
+					durlist = durlist.OrderBy(s => s.ParkingSlotId).ToList();
+					break;
+
+				case "DateIn_desc":
+					durlist = durlist.OrderByDescending(s => s.DateIn).ToList();
+					break;
+				case "DateIn":
+					durlist = durlist.OrderBy(s => s.DateIn).ToList();
+					break;
+				case "DateOut_desc":
+					durlist = durlist.OrderByDescending(s => s.DateOut).ToList();
+					break;
+				case "DateOut":
+					durlist = durlist.OrderBy(s => s.DateOut).ToList();
+					break;
+				case "Duration_desc":
+					durlist = durlist.OrderByDescending(s => s.Duration).ToList();
+					break;
+				case "Duration":
+					durlist = durlist.OrderBy(s => s.Duration).ToList();
+					break;
+				
             }
 
             return View(durlist);
