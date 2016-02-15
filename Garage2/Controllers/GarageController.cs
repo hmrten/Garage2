@@ -84,7 +84,17 @@ namespace Garage2.Controllers
 			ViewBag.DateOutSortParm = sortOrder == "DateOut" ? "DateOut_desc" : "DateOut";
 			ViewBag.DurationSortParm = sortOrder == "Duration" ? "Duration_desc" : "Duration";
 
-            var filteredList = repo.FilteredOverview(searchString, sortOrder);
+            var TypeList = new HashSet<string>();
+
+            foreach (var typex in Enum.GetValues(typeof(VehicleType)))
+            {
+                TypeList.Add(typex.ToString());
+            }
+            TypeList.Add("Show All");
+
+            ViewBag.TypeList = TypeList;
+
+            var filteredList = repo.FilteredOverview(searchString, sortOrder, TypeFilter, DateinFilter);
 
             return View(filteredList);
         }

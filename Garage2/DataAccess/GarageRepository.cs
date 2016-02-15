@@ -56,13 +56,14 @@ namespace Garage2.DataAccess
             return l;
         }
 
-        public IEnumerable<Overview> FilteredOverview(string searchString, string sortOrder)
+        public IEnumerable<Overview> FilteredOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter)
         {
             var seq = CollatedOverview;
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                seq = seq.Where(s => s.Owner.Contains(searchString) || s.VehicleReg.Contains(searchString));
+                var str = searchString.ToLower();
+                seq = seq.Where(s => s.Owner.ToLower().Contains(str) || s.VehicleReg.ToLower().Contains(str));
             }
 
             if (sortOrder == null)
@@ -82,6 +83,22 @@ namespace Garage2.DataAccess
                     seq = seq.OrderByDescending(x => prop.GetValue(x, null));
                 else
                     seq = seq.OrderBy(x => prop.GetValue(x, null));
+            }
+
+            if (TypeFilter != null && TypeFilter != "Show All")
+            {
+                VehicleType vt;
+                if (Enum.TryParse(TypeFilter, out vt))
+                    seq = seq.Where(s => s.Type == vt);
+            }
+
+            if (DateinFilter != null)
+            {
+                if (DateinFilter == true)
+                {
+                    //seq = seq.Where(s => s.DateIn.Date.Equals(DateTime.Today.Date)).ToList();
+                    seq = seq.Where(s => s.DateIn.Date == DateTime.Today.Date);
+                }
             }
 
             return CalcDuration(seq);
