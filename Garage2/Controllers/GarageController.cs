@@ -50,15 +50,18 @@ namespace Garage2.Controllers
             if (ModelState.IsValid)
             {
                 var item = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
-        
+
                 if (item != null)
                 {
                     item.Occupied = true;
 
-                    db.Parkings.Add(new Parking { VehicleReg = vehicle.Reg,
-                                                    ParkingSlotId = item.Id,
-                                                    DateIn = DateTime.Today,
-                                                    DateOut = new DateTime(2016, 2, 17) });
+                    db.Parkings.Add(new Parking
+                    {
+                        VehicleReg = vehicle.Reg,
+                        ParkingSlotId = item.Id,
+                        DateIn = DateTime.Today,
+                        DateOut = new DateTime(2016, 2, 17)
+                    });
 
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
@@ -103,37 +106,18 @@ namespace Garage2.Controllers
             }
 
             //Search works, Sorting per column does not work, cannot figure out how to put list for filtering
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+
+            // Add TypeSortParm to Html.ActionLink
+            ViewBag.TypeSortParm = sortOrder == "type" ? "type_desc" : "type";
 
             switch (sortOrder)
             {
-                case "Type":
-                    durlist  = durlist.OrderByDescending(s => s.Type).ToList();
+                case "type_desc":
+                    durlist = durlist.OrderByDescending(s => s.Type).ToList();
                     break;
-                case "Owner":
-                    durlist = durlist.OrderByDescending(s => s.Owner).ToList();
-                    break;
-                case "VehicleReg":
-                    durlist = durlist.OrderByDescending(s => s.VehicleReg).ToList();
-                    break;
-                case "ParkingSlotId":
-                    durlist = durlist.OrderByDescending(s => s.ParkingSlotId).ToList();
-                    break;
-                case "DateIn":
-                    durlist = durlist.OrderBy(s => s.DateIn).ToList();
-                    break;
-                case "DateOut":
-                    durlist = durlist.OrderBy(s => s.DateOut).ToList();
-                    break;
-                case "Duration":
-                    durlist = durlist.OrderBy(s => s.Duration).ToList();
-                    break;
-                default:
+                case "type":
                     durlist = durlist.OrderBy(s => s.Type).ToList();
                     break;
-
-
             }
 
             return View(durlist);
