@@ -1,4 +1,5 @@
-﻿using Garage2.ViewModels;
+﻿using Garage2.Models;
+using Garage2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,61 +11,117 @@ namespace Garage2.DataAccess
     {
         private GarageContext db = new GarageContext();
 
-        private IEnumerable<Overview> CollateOverview()
+        public IEnumerable<ParkingSlot> ParkingSlots
         {
-            var seq = from vehicles in db.Vehicles
-                      join parrkings in db.Parkings
-                      on vehicles.Reg equals parrkings.VehicleReg
-                      select new Overview
-                      {
-                          VehicleReg = vehicles.Reg,
-                          ParkingSlotId = parrkings.ParkingSlotId,
-                          DateIn = parrkings.DateIn,
-                          DateOut = parrkings.DateOut,
-                          Type = vehicles.Type,
-                          Owner = vehicles.Owner
-                      };
-            return seq;
+            get { return db.ParkingSlots; }
+        }
+
+        public IEnumerable<Parking> Parkings
+        {
+            get { return db.Parkings; }
+        }
+
+        public IEnumerable<Vehicle> Vehicles
+        {
+            get { return db.Vehicles; }
+        }
+
+        public IEnumerable<Overview> CollatedOverview
+        {
+            get
+            {
+                var seq = from vehicles in db.Vehicles
+                          join parrkings in db.Parkings
+                          on vehicles.Reg equals parrkings.VehicleReg
+                          select new Overview
+                          {
+                              VehicleReg = vehicles.Reg,
+                              ParkingSlotId = parrkings.ParkingSlotId,
+                              DateIn = parrkings.DateIn,
+                              DateOut = parrkings.DateOut,
+                              Type = vehicles.Type,
+                              Owner = vehicles.Owner
+                          };
+                return seq;
+            }
+        }
+
+        private List<Overview> CalcDuration(IEnumerable<Overview> seq)
+        {
+            var l = seq.ToList();
+            for (int i = 0; i < l.Count; ++i)
+            {
+                l[i].Duration = l[i].DateOut - l[i].DateIn;
+            }
+            return l;
         }
 
         public IEnumerable<Overview> FilteredOverview(string searchString, string sortOrder)
         {
-            var seq = CollateOverview();
+            var seq = CollatedOverview;
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 seq = seq.Where(s => s.Owner.Contains(searchString) || s.VehicleReg.Contains(searchString));
             }
 
-            //IOrderedEnumerable<Overview> o;
+            if (sortOrder == null)
+                sortOrder = "ParkingSlotId";
 
-            var f = Type.GetType("Garage2.ViewModels.Overview").GetProperty("Type");
-
-            switch (sortOrder)
+            bool orderDesc = false;
+            if (sortOrder.EndsWith("_desc") && sortOrder.Length > 5)
             {
-                case "type_desc": seq = seq.OrderByDescending(s => f); break;
-
-                case "owner_desc": seq = seq.OrderByDescending(s => s.Owner); break;
-                case "own": seq = seq.OrderBy(s => s.Owner); break;
-
-                case "VehicleReg_desc": seq = seq.OrderByDescending(s => s.VehicleReg); break;
-                case "VehicleReg": seq = seq.OrderBy(s => s.VehicleReg); break;
-
-                case "ParkingSlotId_desc": seq = seq.OrderByDescending(s => s.ParkingSlotId); break;
-                case "ParkingSlotId": seq = seq.OrderBy(s => s.ParkingSlotId); break;
-
-                case "DateIn_desc": seq = seq.OrderByDescending(s => s.DateIn); break;
-                case "DateIn": seq = seq.OrderBy(s => s.DateIn); break;
-                case "DateOut_desc": seq = seq.OrderByDescending(s => s.DateOut); break;
-                case "DateOut": seq = seq.OrderBy(s => s.DateOut); break;
-                case "Duration_desc": seq = seq.OrderByDescending(s => s.Duration); break;
-                case "Duration": seq = seq.OrderBy(s => s.Duration); break;
-
-                default:
-                    seq = seq.OrderBy(s => s.Type); break;
+                sortOrder = sortOrder.Substring(0, sortOrder.Length - 5);
+                orderDesc = true;
             }
 
-            return seq;
+            var prop = typeof(Overview).GetProperty(sortOrder);
+            if (prop != null)
+            {
+                if (orderDesc)
+                    seq = seq.OrderByDescending(x => prop.GetValue(x, null));
+                else
+                    seq = seq.OrderBy(x => prop.GetValue(x, null));
+            }
+
+            return CalcDuration(seq);
+        }
+
+        public bool Park(Vehicle vehicle)
+        {
+            var item = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
+
+            if (item != null)
+            {
+                item.Occupied = true;
+
+                db.Parkings.Add(new Parking
+                {
+                    VehicleReg = vehicle.Reg,
+                    ParkingSlotId = item.Id,
+                    DateIn = DateTime.Today,
+                    DateOut = null
+                });
+
+                db.Vehicles.Add(vehicle);
+                db.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void Delete(int? id, int? psi, string reg)
+        {
+            var parkingSlot = db.ParkingSlots.First(i => i.Id == psi);
+            parkingSlot.Occupied = false;
+            parkingSlot.VehicleReg = null;
+
+            var parking = db.Parkings.First(i => i.Id == id);
+            parking.DateOut = DateTime.Now;
+
+            db.SaveChanges();
         }
 
         protected virtual void Dispose(bool disposing)
