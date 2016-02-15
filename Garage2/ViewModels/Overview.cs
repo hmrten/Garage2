@@ -20,7 +20,7 @@ namespace Garage2.ViewModels
 		public DateTime DateIn { get; set; }
 
 		[Display(Name = "Date out")]
-		public DateTime DateOut { get; set; }
+		public DateTime? DateOut { get; set; }
 		
 		[Required, Display(Name ="Vehicle Type")]
 		public VehicleType Type { get; set; }
@@ -28,6 +28,6 @@ namespace Garage2.ViewModels
 		[Required, StringLength(100)]
 		public string Owner { get; set; }
 
-		public TimeSpan Duration { set; get; }
+		public TimeSpan? Duration { set; get; }
 	}
 }
