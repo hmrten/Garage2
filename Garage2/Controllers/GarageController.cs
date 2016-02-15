@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Threading;
+using System.Globalization;
 
 namespace Garage2.Controllers
 {
@@ -85,7 +87,7 @@ namespace Garage2.Controllers
         //        return View(durlist);
         //}
 
-        public ActionResult DisplayOverview(string searchString, string sortOrder)
+		public ActionResult DisplayOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter)
         {
             var joining = from vehicles in db.Vehicles
                           join parrkings in db.Parkings
@@ -100,13 +102,10 @@ namespace Garage2.Controllers
             
             if (!String.IsNullOrEmpty(searchString))
             {
-                durlist = durlist.Where(s => s.Owner.Contains(searchString) 
-                    || s.VehicleReg.Contains(searchString)).ToList();
+				durlist = durlist.Where(s => s.Owner.ToLower().Contains(searchString.ToLower())
+					|| s.VehicleReg.ToLower().Contains(searchString.ToLower())).ToList();
             }
 
-            //Search works, Sorting per column does not work, cannot figure out how to put list for filtering
-
-            // Add TypeSortParm to Html.ActionLink
             ViewBag.TypeSortParm = sortOrder == "type" ? "type_desc" : "type";
 			ViewBag.OwnSortParm = sortOrder == "own" ? "owner_desc" : "own";
 			ViewBag.RegSortParm = sortOrder == "VehicleReg" ? "VehicleReg_desc" : "VehicleReg";
@@ -166,7 +165,33 @@ namespace Garage2.Controllers
 				
             }
 
-            return View(durlist);
+			var TypeList = new HashSet<string>();
+			
+			foreach (var typex in durlist)
+			{
+				TypeList.Add(typex.Type.ToString());			
+			}
+			TypeList.Add("Show All");
+
+			ViewBag.TypeList = TypeList;
+
+			
+			
+			if (TypeFilter != null && TypeFilter != "Show All")
+			{
+				durlist = durlist.Where(s => s.Type.Equals(Enum.Parse(typeof(VehicleType), TypeFilter))).ToList();
+			}
+
+			if (DateinFilter != null)
+			{
+				if (DateinFilter == true)
+				{
+					durlist = durlist.Where(s => s.DateIn.Date.Equals(DateTime.Today.Date)).ToList();
+				}
+			}
+			
+            
+			return View(durlist);
         }
     }
 }

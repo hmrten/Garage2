@@ -10,11 +10,12 @@
     <p>
         Search Owner or RegNr: @Html.TextBox("searchString") <br />
         <br/>
+        Filter: @Html.DropDownList("TypeFilter", new SelectList(ViewBag.TypeList))
+        <br />
+        <br />
+        <input id="DateinFilter" name="DateinFilter" type="checkbox" value="false" /> Apply filter over current date! [Checked = Yes]
+        <br /><br />
         <input type="submit" value="Submit" /> <br />
-        <br />
-        @*Filter: @Html.DropDownListFor(m => m.VehicleType,,"Choose one")
-                @Html.ValidationMessageFor(m => m)*@
-        <br />
         <br />
     </p>
 }
