@@ -59,7 +59,7 @@ namespace Garage2.Controllers
                         VehicleReg = vehicle.Reg,
                         ParkingSlotId = item.Id,
                         DateIn = DateTime.Today,
-                        DateOut = new DateTime(2016, 2, 17)
+                        DateOut = null
                     });
 
                     db.Vehicles.Add(vehicle);

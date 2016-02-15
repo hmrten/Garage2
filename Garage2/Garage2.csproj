@@ -166,6 +166,10 @@
     <Compile Include="Migrations\201602121208282_initial.Designer.cs">
       <DependentUpon>201602121208282_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602150852597_NullalbleDateOut.cs" />
+    <Compile Include="Migrations\201602150852597_NullalbleDateOut.Designer.cs">
+      <DependentUpon>201602150852597_NullalbleDateOut.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ViewModels\Overview.cs" />
     <Compile Include="Models\Parking.cs" />
@@ -232,6 +236,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201602121208282_initial.resx">
       <DependentUpon>201602121208282_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602150852597_NullalbleDateOut.resx">
+      <DependentUpon>201602150852597_NullalbleDateOut.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
