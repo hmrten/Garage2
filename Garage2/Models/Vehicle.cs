@@ -11,9 +11,7 @@ namespace Garage2.Models
         Car,
         Motorcycle,
         Bus,
-        Truck,
-        
-        Last
+        Truck
     }
 
     public class Vehicle
