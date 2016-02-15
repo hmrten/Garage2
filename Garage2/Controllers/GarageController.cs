@@ -53,6 +53,7 @@ namespace Garage2.Controllers
                 if (item != null)
                 {
                     item.Occupied = true;
+                    item.VehicleReg = vehicle.Reg;
 
                     db.Parkings.Add(new Parking
                     {
@@ -65,11 +66,39 @@ namespace Garage2.Controllers
                     db.Vehicles.Add(vehicle);
                     db.SaveChanges();
                 }
-                return RedirectToAction("Vehicles");
+                return RedirectToAction("DisplayOverview");
             }
             return View();
         }
+       
+        public ActionResult Unpark()
+        {
+            var testmodel = db.Parkings
+                .Where(i => i.DateOut == null)
+                .ToList();
 
+            return View(testmodel);
+           
+        }
+
+        public ActionResult Delete(int? id, int? psi, string reg)
+        {
+
+            var parkingSlot = db.ParkingSlots.First(i => i.Id == psi);
+            parkingSlot.Occupied = false;
+            parkingSlot.VehicleReg = null;
+
+            var parking = db.Parkings.First(i => i.Id == id);
+            parking.DateOut = DateTime.Today;
+
+            //var vehicle = db.Vehicles.First(i => i.Reg == reg);
+            //db.Vehicles.Remove(vehicle);
+
+            db.SaveChanges();
+
+
+            return RedirectToAction("DisplayOverview");
+        }
 
         //public ActionResult DisplayOverview() 
         //{

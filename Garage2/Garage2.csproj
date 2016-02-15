@@ -255,6 +255,7 @@
     <Content Include="Views\Garage\Parkings.cshtml" />
     <Content Include="Views\Garage\Park.cshtml" />
     <Content Include="Views\Garage\DisplayOverview.cshtml" />
+    <Content Include="Views\Garage\Unpark.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

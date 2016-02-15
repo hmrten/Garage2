@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Garage2.Models.Parking>
+
+@{
+    ViewBag.Title = "Unpark";
+}
+
+<h2>Unpark</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VehicleReg)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParkingSlotId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateIn)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VehicleReg)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParkingSlotId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateIn)
+        </td>
+        <td>
+            @Html.ActionLink("Unpark", "Delete", new { id = item.Id, psi = item.ParkingSlotId, reg = item.VehicleReg })
+        </td>
+    </tr>
+}
+
+</table>
