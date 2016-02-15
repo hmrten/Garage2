@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Garage2.Models;
 
 namespace Garage2.Controllers
 {
@@ -60,7 +59,7 @@ namespace Garage2.Controllers
                         VehicleReg = vehicle.Reg,
                         ParkingSlotId = item.Id,
                         DateIn = DateTime.Today,
-                        DateOut = new DateTime(2016, 2, 17)
+                        DateOut = null
                     });
 
                     db.Vehicles.Add(vehicle);

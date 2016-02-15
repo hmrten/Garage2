@@ -21,6 +21,6 @@ namespace Garage2.Models
         public DateTime DateIn { get; set; }
 
         [Display(Name = "Date out")]
-        public DateTime DateOut { get; set; }
+        public DateTime? DateOut { get; set; }
     }
 }
