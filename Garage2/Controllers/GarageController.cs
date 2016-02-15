@@ -61,7 +61,7 @@ namespace Garage2.Controllers
                     {
                         VehicleReg = vehicle.Reg,
                         ParkingSlotId = item.Id,
-                        DateIn = DateTime.Today,
+                        DateIn = DateTime.Now,
                         DateOut = null
                     });
 
@@ -91,7 +91,7 @@ namespace Garage2.Controllers
             parkingSlot.VehicleReg = null;
 
             var parking = db.Parkings.First(i => i.Id == id);
-            parking.DateOut = DateTime.Today;
+            parking.DateOut = DateTime.Now;
 
             //var vehicle = db.Vehicles.First(i => i.Reg == reg);
             //db.Vehicles.Remove(vehicle);
