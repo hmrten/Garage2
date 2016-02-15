@@ -11,9 +11,7 @@ namespace Garage2.Controllers
 {
     public class GarageController : Controller
     {
-        const int capacity = 100;
-
-        private GarageContext db = new GarageContext();
+        private GarageRepository repo = new GarageRepository();
 
         public ActionResult Index()
         {
@@ -22,17 +20,17 @@ namespace Garage2.Controllers
 
         public ActionResult Slots()
         {
-            return View(db.ParkingSlots);
+            return View(repo.ParkingSlots);
         }
 
         public ActionResult Vehicles()
         {
-            return View(db.Vehicles);
+            return View(repo.Vehicles);
         }
 
         public ActionResult Parkings()
         {
-            return View(db.Parkings);
+            return View(repo.Parkings);
         }
 
         // GET: Items/Park
@@ -48,125 +46,29 @@ namespace Garage2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var item = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
-
-                if (item != null)
-                {
-                    item.Occupied = true;
-
-                    db.Parkings.Add(new Parking
-                    {
-                        VehicleReg = vehicle.Reg,
-                        ParkingSlotId = item.Id,
-                        DateIn = DateTime.Today,
-                        DateOut = null
-                    });
-
-                    db.Vehicles.Add(vehicle);
-                    db.SaveChanges();
-                }
+                repo.Park(vehicle);
                 return RedirectToAction("Vehicles");
             }
-            return View();
+            return View(vehicle);
         }
-
-
-        //public ActionResult DisplayOverview() 
-        //{
-        //    var joining = from vehicles in db.Vehicles
-        //                  join parrkings in db.Parkings
-        //                  on vehicles.Reg equals parrkings.VehicleReg
-        //                  select new Overview { VehicleReg = vehicles.Reg, ParkingSlotId = parrkings.ParkingSlotId, DateIn = parrkings.DateIn, DateOut = parrkings.DateOut, Type = vehicles.Type, Owner = vehicles.Owner};
-        //    var durlist = joining.ToList();
-        //    for (int i = 0; i < durlist.Count; i++) 
-        //    {
-        //        durlist[i].Duration = durlist[i].DateOut - durlist[i].DateIn;
-        //    }
-        //        return View(durlist);
-        //}
 
         public ActionResult DisplayOverview(string searchString, string sortOrder)
         {
-            var joining = from vehicles in db.Vehicles
-                          join parrkings in db.Parkings
-                          on vehicles.Reg equals parrkings.VehicleReg
-                          select new Overview { VehicleReg = vehicles.Reg, ParkingSlotId = parrkings.ParkingSlotId, DateIn = parrkings.DateIn, DateOut = parrkings.DateOut, Type = vehicles.Type, Owner = vehicles.Owner };
-            var durlist = joining.ToList();
+            // Default to sorting by parkign slot id
+            sortOrder = sortOrder ?? "ParkingSlotId";
 
-            for (int i = 0; i < durlist.Count; i++)
-            {
-                durlist[i].Duration = durlist[i].DateOut - durlist[i].DateIn;
-            }
-            
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                durlist = durlist.Where(s => s.Owner.Contains(searchString) 
-                    || s.VehicleReg.Contains(searchString)).ToList();
-            }
+            // Update ViewBag
+            ViewBag.TypeSortParm = sortOrder == "Type" ? "Type_desc" : "Type";
+            ViewBag.OwnSortParm = sortOrder == "Owner" ? "Owner_desc" : "Owner";
+            ViewBag.RegSortParm = sortOrder == "VehicleReg" ? "VehicleReg_desc" : "VehicleReg";
+            ViewBag.PIDSortParm = sortOrder == "ParkingSlotId" ? "ParkingSlotId_desc" : "ParkingSlotId";
+            ViewBag.DateInSortParm = sortOrder == "DateIn" ? "DateIn_desc" : "DateIn";
+            ViewBag.DateOutSortParm = sortOrder == "DateOut" ? "DateOut_desc" : "DateOut";
+            ViewBag.DurationSortParm = sortOrder == "Duration" ? "Duration_desc" : "Duration";
 
-            //Search works, Sorting per column does not work, cannot figure out how to put list for filtering
+            var filteredList = repo.FilteredOverview(searchString, sortOrder);
 
-            // Add TypeSortParm to Html.ActionLink
-            ViewBag.TypeSortParm = sortOrder == "type" ? "type_desc" : "type";
-			ViewBag.OwnSortParm = sortOrder == "own" ? "owner_desc" : "own";
-			ViewBag.RegSortParm = sortOrder == "VehicleReg" ? "VehicleReg_desc" : "VehicleReg";
-			ViewBag.PIDSortParm = sortOrder == "ParkingSlotId" ? "ParkingSlotId_desc" : "ParkingSlotId";
-			ViewBag.DateInSortParm = sortOrder == "DateIn" ? "DateIn_desc" : "DateIn";
-			ViewBag.DateOutSortParm = sortOrder == "DateOut" ? "DateOut_desc" : "DateOut";
-			ViewBag.DurationSortParm = sortOrder == "Duration" ? "Duration_desc" : "Duration";
-
-            switch (sortOrder)
-            {
-                case "type_desc":
-                    durlist = durlist.OrderByDescending(s => s.Type).ToList();
-                    break;
-                case "type":
-                    durlist = durlist.OrderBy(s => s.Type).ToList();
-                    break;
-
-				case "owner_desc":
-					durlist = durlist.OrderByDescending(s => s.Owner).ToList();
-					break;
-				case "own":
-					durlist = durlist.OrderBy(s => s.Owner).ToList();
-					break;
-
-				case "VehicleReg_desc":
-					durlist = durlist.OrderByDescending(s => s.VehicleReg).ToList();
-					break;
-				case "VehicleReg":
-					durlist = durlist.OrderBy(s => s.VehicleReg).ToList();
-					break;
-
-				case "ParkingSlotId_desc":
-					durlist = durlist.OrderByDescending(s => s.ParkingSlotId).ToList();
-					break;
-				case "ParkingSlotId":
-					durlist = durlist.OrderBy(s => s.ParkingSlotId).ToList();
-					break;
-
-				case "DateIn_desc":
-					durlist = durlist.OrderByDescending(s => s.DateIn).ToList();
-					break;
-				case "DateIn":
-					durlist = durlist.OrderBy(s => s.DateIn).ToList();
-					break;
-				case "DateOut_desc":
-					durlist = durlist.OrderByDescending(s => s.DateOut).ToList();
-					break;
-				case "DateOut":
-					durlist = durlist.OrderBy(s => s.DateOut).ToList();
-					break;
-				case "Duration_desc":
-					durlist = durlist.OrderByDescending(s => s.Duration).ToList();
-					break;
-				case "Duration":
-					durlist = durlist.OrderBy(s => s.Duration).ToList();
-					break;
-				
-            }
-
-            return View(durlist);
+            return View(filteredList);
         }
     }
 }
