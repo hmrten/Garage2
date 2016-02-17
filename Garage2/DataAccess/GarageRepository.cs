@@ -31,14 +31,14 @@ namespace Garage2.DataAccess
             get
             {
                 var seq = from vehicles in db.Vehicles
-                          join parrkings in db.Parkings
-                          on vehicles.Reg equals parrkings.VehicleReg
+                          join parkings in db.Parkings
+                          on vehicles.Reg equals parkings.VehicleReg
                           select new Overview
                           {
                               VehicleReg = vehicles.Reg,
-                              ParkingSlotId = parrkings.ParkingSlotId,
-                              DateIn = parrkings.DateIn,
-                              DateOut = parrkings.DateOut,
+                              ParkingSlotId = parkings.ParkingSlotId,
+                              DateIn = parkings.DateIn,
+                              DateOut = parkings.DateOut,
                               Type = vehicles.Type,
                               Owner = vehicles.Owner
                           };
