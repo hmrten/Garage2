@@ -6,14 +6,14 @@ namespace Garage2.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class initial : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class model25 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(model25));
         
         string IMigrationMetadata.Id
         {
-            get { return "201602121208282_initial"; }
+            get { return "201602171410013_model25"; }
         }
         
         string IMigrationMetadata.Source

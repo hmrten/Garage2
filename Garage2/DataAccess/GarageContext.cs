@@ -11,6 +11,7 @@ namespace Garage2.DataAccess
     {
         public DbSet<ParkingSlot> ParkingSlots { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<VehicleType> VehicleTypes { get; set; }
         public DbSet<Parking> Parkings { get; set; }
 
         public GarageContext() : base("garage2") { }

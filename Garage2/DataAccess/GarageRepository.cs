@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Garage2.DataAccess
 {
@@ -26,6 +27,11 @@ namespace Garage2.DataAccess
             get { return db.Vehicles; }
         }
 
+        public IEnumerable<VehicleType> VehicleTypes
+        {
+            get { return db.VehicleTypes; }
+        }
+
         public IEnumerable<Overview> CollatedOverview
         {
             get
@@ -39,7 +45,7 @@ namespace Garage2.DataAccess
                               ParkingSlotId = parkings.ParkingSlotId,
                               DateIn = parkings.DateIn,
                               DateOut = parkings.DateOut,
-                              Type = vehicles.Type,
+                              Type = vehicles.Type.Name,
                               Owner = vehicles.Owner
                           };
                 return seq;
@@ -87,9 +93,10 @@ namespace Garage2.DataAccess
 
             if (TypeFilter != null && TypeFilter != "Show All")
             {
-                VehicleType vt;
-                if (Enum.TryParse(TypeFilter, out vt))
-                    seq = seq.Where(s => s.Type == vt);
+                seq = from v in seq
+                      where String.Compare(v.Type, TypeFilter, true) == 0
+                      select v;
+                //seq = seq.Where(s => s.Type == vt);
             }
 
             if (DateinFilter != null)
@@ -139,6 +146,12 @@ namespace Garage2.DataAccess
             parking.DateOut = DateTime.Now;
 
             db.SaveChanges();
+        }
+
+        public IEnumerable<SelectListItem> GetTypeList()
+        {
+            return (from t in db.VehicleTypes
+                    select new SelectListItem() { Text = t.Name, Value = t.Id.ToString() }).ToList();
         }
 
         protected virtual void Dispose(bool disposing)

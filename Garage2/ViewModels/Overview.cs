@@ -23,7 +23,7 @@ namespace Garage2.ViewModels
 		public DateTime? DateOut { get; set; }
 		
 		[Required, Display(Name ="Vehicle Type")]
-		public VehicleType Type { get; set; }
+		public string Type { get; set; }
 
 		[Required, StringLength(100)]
 		public string Owner { get; set; }

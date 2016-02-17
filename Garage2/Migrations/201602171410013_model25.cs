@@ -3,7 +3,7 @@ namespace Garage2.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class model25 : DbMigration
     {
         public override void Up()
         {
@@ -15,7 +15,7 @@ namespace Garage2.Migrations
                         VehicleReg = c.String(nullable: false, maxLength: 50),
                         ParkingSlotId = c.Int(nullable: false),
                         DateIn = c.DateTime(nullable: false),
-                        DateOut = c.DateTime(nullable: false),
+                        DateOut = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -34,15 +34,29 @@ namespace Garage2.Migrations
                 c => new
                     {
                         Reg = c.String(nullable: false, maxLength: 50),
-                        Type = c.Int(nullable: false),
                         Owner = c.String(nullable: false, maxLength: 100),
+                        VehicleTypeId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Reg);
+                .PrimaryKey(t => t.Reg)
+                .ForeignKey("dbo.VehicleTypes", t => t.VehicleTypeId, cascadeDelete: true)
+                .Index(t => t.VehicleTypeId);
+            
+            CreateTable(
+                "dbo.VehicleTypes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 50),
+                    })
+                .PrimaryKey(t => t.Id);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Vehicles", "VehicleTypeId", "dbo.VehicleTypes");
+            DropIndex("dbo.Vehicles", new[] { "VehicleTypeId" });
+            DropTable("dbo.VehicleTypes");
             DropTable("dbo.Vehicles");
             DropTable("dbo.ParkingSlots");
             DropTable("dbo.Parkings");
