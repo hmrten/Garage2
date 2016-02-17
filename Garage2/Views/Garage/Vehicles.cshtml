@@ -6,33 +6,29 @@
 
 <h2>Vehicles</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-
-</p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Type)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Owner)
+            @Html.DisplayNameFor(model => model.Reg)
         </th>
-        <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Owner)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Reg }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Reg }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Reg })
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reg)
         </td>
     </tr>
 }
