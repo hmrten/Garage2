@@ -51,7 +51,17 @@ namespace Garage2.Migrations
                     new Parking { ParkingSlotId = 4, VehicleReg = "DDD444", DateIn = new DateTime(2016, 2, 17), DateOut = new DateTime(2016, 2, 18) },
                     new Parking { ParkingSlotId = 5, VehicleReg = "DDD444", DateIn = new DateTime(2016, 2, 18), DateOut = null }
                     );
+                context.ParkingSlots.AddOrUpdate(s => s.Id,
+                    new ParkingSlot { Id = 1, Occupied = true, VehicleReg = "AAA111" },
+                    new ParkingSlot { Id = 2, Occupied = true, VehicleReg = "BBB222" },
+                    new ParkingSlot { Id = 3, Occupied = true, VehicleReg = "CCC333" },
+                    new ParkingSlot { Id = 5, Occupied = true, VehicleReg = "DDD444" }
+                    );
             }
+            /*else
+            {
+                context.Parkings.RemoveRange(context.Parkings);
+            }*/
 
             context.SaveChanges();
         }
