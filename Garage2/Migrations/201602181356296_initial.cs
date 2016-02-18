@@ -3,10 +3,19 @@ namespace Garage2.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class model25 : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
+            CreateTable(
+                "dbo.Owners",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(nullable: false, maxLength: 100),
+                    })
+                .PrimaryKey(t => t.Id);
+            
             CreateTable(
                 "dbo.Parkings",
                 c => new
@@ -34,11 +43,13 @@ namespace Garage2.Migrations
                 c => new
                     {
                         Reg = c.String(nullable: false, maxLength: 50),
-                        Owner = c.String(nullable: false, maxLength: 100),
+                        OwnerId = c.Int(nullable: false),
                         VehicleTypeId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Reg)
+                .ForeignKey("dbo.Owners", t => t.OwnerId, cascadeDelete: true)
                 .ForeignKey("dbo.VehicleTypes", t => t.VehicleTypeId, cascadeDelete: true)
+                .Index(t => t.OwnerId)
                 .Index(t => t.VehicleTypeId);
             
             CreateTable(
@@ -55,11 +66,14 @@ namespace Garage2.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.Vehicles", "VehicleTypeId", "dbo.VehicleTypes");
+            DropForeignKey("dbo.Vehicles", "OwnerId", "dbo.Owners");
             DropIndex("dbo.Vehicles", new[] { "VehicleTypeId" });
+            DropIndex("dbo.Vehicles", new[] { "OwnerId" });
             DropTable("dbo.VehicleTypes");
             DropTable("dbo.Vehicles");
             DropTable("dbo.ParkingSlots");
             DropTable("dbo.Parkings");
+            DropTable("dbo.Owners");
         }
     }
 }
