@@ -21,6 +21,13 @@ namespace Garage2.Migrations
                 new VehicleType { Name = "Bus" },
                 new VehicleType { Name = "Truck" }
                 );
+            if (context.ParkingSlots.Count() == 0)
+            {
+                for (int i = 0; i < 100; ++i)
+                {
+                    context.ParkingSlots.AddOrUpdate(new ParkingSlot { Occupied = false, VehicleReg = null });
+                }
+            }
             context.SaveChanges();
         }
     }
