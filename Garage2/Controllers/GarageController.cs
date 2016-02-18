@@ -40,7 +40,7 @@ namespace Garage2.Controllers
             return View(repo.Owners);
         }
 
-        // GET: Items/Park
+        // GET: Items/Register
         public ActionResult Register()
         {
             ViewBag.TypeList = repo.GetTypeList();
@@ -50,7 +50,7 @@ namespace Garage2.Controllers
         // POST: Items/Register
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "Reg, VehicleTypeId, Owner")] Vehicle vehicle)
+        public ActionResult Register([Bind(Include = "Reg, VehicleTypeId, OwnerId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
