@@ -41,24 +41,60 @@ namespace Garage2.Controllers
         }
 
         // GET: Items/Park
-        public ActionResult Park()
+        public ActionResult Register()
         {
             ViewBag.TypeList = repo.GetTypeList();
+            return View();
+        }
+
+        // POST: Items/Register
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register([Bind(Include = "Reg, VehicleTypeId, Owner")] Vehicle vehicle)
+        {
+            if (ModelState.IsValid)
+            {
+                repo.Register(vehicle);
+                return RedirectToAction("Vehicles");
+            }
+            return View(vehicle);
+        }
+
+
+
+
+        // GET: Items/Park
+        public ActionResult Park()
+        {
             return View();
         }
 
         // POST: Items/Park
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Park([Bind(Include = "Reg,Type,Owner")] Vehicle vehicle)
+        public ActionResult Park([Bind(Include = "Reg")] String reg)
         {
             if (ModelState.IsValid)
             {
-                repo.Park(vehicle);
-                return RedirectToAction("Vehicles");
+                if (!repo.Park(reg))
+                    return RedirectToAction("Register");
             }
-            return View(vehicle);
+            return RedirectToAction("Slots");
         }
+
+
+        //// POST: Items/Park
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Park([Bind(Include = "Reg,Type,Owner")] Vehicle vehicle)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        repo.Park(vehicle);
+        //        return RedirectToAction("Vehicles");
+        //    }
+        //    return View(vehicle);
+        //}
 
         public ActionResult Unpark()
         {

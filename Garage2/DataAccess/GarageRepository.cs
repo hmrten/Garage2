@@ -128,23 +128,35 @@ namespace Garage2.DataAccess
 
         }
 
-        public bool Park(Vehicle vehicle)
+        public bool Register(Vehicle vehicle)
         {
-            var item = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
 
-            if (item != null)
+            db.Vehicles.Add(vehicle);
+            db.SaveChanges();
+
+            return true;
+        }
+
+
+
+        public bool Park(String reg)
+        {
+            var item = db.Vehicles.FirstOrDefault(i => i.Reg == reg);
+
+            var item2 = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
+
+            if (item != null && item2 != null)
             {
-                item.Occupied = true;
+                item2.Occupied = true;
 
                 db.Parkings.Add(new Parking
                 {
-                    VehicleReg = vehicle.Reg,
-                    ParkingSlotId = item.Id,
+                    VehicleReg = reg,
+                    ParkingSlotId = item2.Id,
                     DateIn = DateTime.Today,
                     DateOut = null
                 });
 
-                db.Vehicles.Add(vehicle);
                 db.SaveChanges();
 
                 return true;
@@ -152,6 +164,32 @@ namespace Garage2.DataAccess
 
             return false;
         }
+
+
+        //public bool Park(Vehicle vehicle)
+        //{
+        //    var item = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
+
+        //    if (item != null)
+        //    {
+        //        item.Occupied = true;
+
+        //        db.Parkings.Add(new Parking
+        //        {
+        //            VehicleReg = vehicle.Reg,
+        //            ParkingSlotId = item.Id,
+        //            DateIn = DateTime.Today,
+        //            DateOut = null
+        //        });
+
+        //        db.Vehicles.Add(vehicle);
+        //        db.SaveChanges();
+
+        //        return true;
+        //    }
+
+        //    return false;
+        //}
 
         public void Delete(int? id, int? psi, string reg)
         {
