@@ -100,13 +100,6 @@ namespace Garage2.DataAccess
                     seq = seq.OrderBy(x => prop.GetValue(x, null));
             }
 
-            if (TypeFilter != null && TypeFilter != "Show All")
-            {
-                seq = from v in seq
-                      where String.Compare(v.Type, TypeFilter, true) == 0
-                      select v;
-                //seq = seq.Where(s => s.Type == vt);
-            }
 
             if (DateinFilter != null)
             {
@@ -117,13 +110,17 @@ namespace Garage2.DataAccess
                 }
             }
 
-            
-
 			if (VehFilter != null) 
 			{
 				if (VehFilter== true)
 				{
-					seq = seq.Where(s => s.Type == TypeFilter.ToString());
+                    if (TypeFilter != null)
+                    {
+                        var name = db.VehicleTypes.Find(int.Parse(TypeFilter)).Name;
+                        seq = seq.Where(o => o.Type == name);
+                        //seq = seq.Where(s => s.Type == vt);
+                    }
+					//seq = seq.Where(s => s.Type == TypeFilter.ToString());
 				}
 			}
 

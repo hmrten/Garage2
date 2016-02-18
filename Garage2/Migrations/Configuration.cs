@@ -35,6 +35,24 @@ namespace Garage2.Migrations
                 new Owner { Name = "Jane Doe" }
                 );
 
+            context.Vehicles.AddOrUpdate(v => v.Reg,
+                new Vehicle { OwnerId = 1, Reg = "AAA111", OwnerInfo = null, VehicleTypeId = 1 },
+                new Vehicle { OwnerId = 1, Reg = "BBB222", OwnerInfo = null, VehicleTypeId = 2 },
+                new Vehicle { OwnerId = 2, Reg = "CCC333", OwnerInfo = null, VehicleTypeId = 3 },
+                new Vehicle { OwnerId = 3, Reg = "DDD444", OwnerInfo = null, VehicleTypeId = 4 }
+                );
+
+            if (context.Parkings.Count() == 0)
+            {
+                context.Parkings.AddOrUpdate(
+                    new Parking { ParkingSlotId = 1, VehicleReg = "AAA111", DateIn = new DateTime(2016, 2, 15), DateOut = null },
+                    new Parking { ParkingSlotId = 2, VehicleReg = "BBB222", DateIn = new DateTime(2016, 2, 16), DateOut = null },
+                    new Parking { ParkingSlotId = 3, VehicleReg = "CCC333", DateIn = new DateTime(2016, 2, 17), DateOut = null },
+                    new Parking { ParkingSlotId = 4, VehicleReg = "DDD444", DateIn = new DateTime(2016, 2, 17), DateOut = new DateTime(2016, 2, 18) },
+                    new Parking { ParkingSlotId = 5, VehicleReg = "DDD444", DateIn = new DateTime(2016, 2, 18), DateOut = null }
+                    );
+            }
+
             context.SaveChanges();
         }
     }
