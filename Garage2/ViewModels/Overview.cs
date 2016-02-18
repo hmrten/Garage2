@@ -29,9 +29,5 @@ namespace Garage2.ViewModels
 		public string OwnerName { get; set; }
 
 		public TimeSpan? Duration { set; get; }
-
-		public int OwnerID { set; get; }
-
-		public int VehicleID { set; get; }
 	}
 }
