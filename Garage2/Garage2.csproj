@@ -252,9 +252,10 @@
     <Content Include="Views\Garage\Slots.cshtml" />
     <Content Include="Views\Garage\Vehicles.cshtml" />
     <Content Include="Views\Garage\Parkings.cshtml" />
-    <Content Include="Views\Garage\Park.cshtml" />
     <Content Include="Views\Garage\DisplayOverview.cshtml" />
     <Content Include="Views\Garage\Unpark.cshtml" />
+    <Content Include="Views\Garage\Register.cshtml" />
+    <Content Include="Views\Garage\Park.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201602171410013_model25.resx">
