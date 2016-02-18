@@ -62,7 +62,7 @@ namespace Garage2.DataAccess
             return l;
         }
 
-        public IEnumerable<Overview> FilteredOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter)
+        public IEnumerable<Overview> FilteredOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter, bool? VehFilter)
         {
             var seq = CollatedOverview;
 
@@ -108,7 +108,18 @@ namespace Garage2.DataAccess
                 }
             }
 
-            return CalcDuration(seq);
+            
+
+			if (VehFilter != null) 
+			{
+				if (VehFilter== true)
+				{
+					seq = seq.Where(s => s.Type == TypeFilter.ToString());
+				}
+			}
+
+			return CalcDuration(seq);
+
         }
 
         public bool Park(Vehicle vehicle)

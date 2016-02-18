@@ -71,7 +71,7 @@ namespace Garage2.Controllers
             return RedirectToAction("DisplayOverview");
         }
 
-		public ActionResult DisplayOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter)
+		public ActionResult DisplayOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter, bool? VehFilter)
         {
             // Default to sorting by parkign slot id
             sortOrder = sortOrder ?? "ParkingSlotId";
@@ -97,7 +97,7 @@ namespace Garage2.Controllers
 
             ViewBag.TypeList = repo.GetTypeList();
 
-            var filteredList = repo.FilteredOverview(searchString, sortOrder, TypeFilter, DateinFilter);
+            var filteredList = repo.FilteredOverview(searchString, sortOrder, TypeFilter, DateinFilter, VehFilter);
 
             return View(filteredList);
         }
