@@ -141,10 +141,7 @@ namespace Garage2.DataAccess
 
         public bool Park(String reg)
         {
-            //var item = db.Vehicles.FirstOrDefault(i => i.Reg == reg);
-
-            var item = db
-
+            var item = db.Vehicles.FirstOrDefault(i => i.Reg == reg);
 
             var item2 = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
 
