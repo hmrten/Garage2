@@ -178,13 +178,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602171410013_model25.cs" />
-    <Compile Include="Migrations\201602171410013_model25.Designer.cs">
-      <DependentUpon>201602171410013_model25.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602180829403_ownermodel.cs" />
-    <Compile Include="Migrations\201602180829403_ownermodel.Designer.cs">
-      <DependentUpon>201602180829403_ownermodel.cs</DependentUpon>
+    <Compile Include="Migrations\201602181356296_initial.cs" />
+    <Compile Include="Migrations\201602181356296_initial.Designer.cs">
+      <DependentUpon>201602181356296_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Owner.cs" />
@@ -264,16 +260,13 @@
     <Content Include="Views\Garage\Owners.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602171410013_model25.resx">
-      <DependentUpon>201602171410013_model25.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602180829403_ownermodel.resx">
-      <DependentUpon>201602180829403_ownermodel.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201602181356296_initial.resx">
+      <DependentUpon>201602181356296_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -35,6 +35,8 @@ namespace Garage2.Migrations
                 new Owner { Name = "Jane Doe" }
                 );
 
+            context.SaveChanges();
+
             if (context.VehicleTypes.Count() > 0)
             {
 
