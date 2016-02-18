@@ -182,6 +182,10 @@
     <Compile Include="Migrations\201602171410013_model25.Designer.cs">
       <DependentUpon>201602171410013_model25.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602180829403_ownermodel.cs" />
+    <Compile Include="Migrations\201602180829403_ownermodel.Designer.cs">
+      <DependentUpon>201602180829403_ownermodel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Owner.cs" />
     <Compile Include="Models\VehicleType.cs" />
@@ -256,10 +260,14 @@
     <Content Include="Views\Garage\Park.cshtml" />
     <Content Include="Views\Garage\DisplayOverview.cshtml" />
     <Content Include="Views\Garage\Unpark.cshtml" />
+    <Content Include="Views\Garage\Owners.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201602171410013_model25.resx">
       <DependentUpon>201602171410013_model25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602180829403_ownermodel.resx">
+      <DependentUpon>201602180829403_ownermodel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

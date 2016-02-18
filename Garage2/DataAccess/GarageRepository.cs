@@ -32,6 +32,11 @@ namespace Garage2.DataAccess
             get { return db.VehicleTypes; }
         }
 
+        public IEnumerable<Owner> Owners
+        {
+            get { return db.Owners; }
+        }
+
         public IEnumerable<Overview> CollatedOverview
         {
             get
