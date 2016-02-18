@@ -35,6 +35,11 @@ namespace Garage2.Controllers
             return View(repo.Parkings);
         }
 
+        public ActionResult Owners()
+        {
+            return View(repo.Owners);
+        }
+
         // GET: Items/Park
         public ActionResult Park()
         {
@@ -73,7 +78,7 @@ namespace Garage2.Controllers
 
 		public ActionResult DisplayOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter, bool? VehFilter)
         {
-            // Default to sorting by parkign slot id
+            // Default to sorting by parking slot id
             sortOrder = sortOrder ?? "ParkingSlotId";
 
             // Update ViewBag

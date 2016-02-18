@@ -25,8 +25,8 @@ namespace Garage2.ViewModels
 		[Required, Display(Name ="Vehicle Type")]
 		public string Type { get; set; }
 
-		[Required, StringLength(100)]
-		public string Owner { get; set; }
+		[Required, StringLength(100), Display(Name = "Owner")]
+		public string OwnerName { get; set; }
 
 		public TimeSpan? Duration { set; get; }
 	}

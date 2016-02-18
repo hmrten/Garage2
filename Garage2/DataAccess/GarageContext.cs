@@ -13,6 +13,7 @@ namespace Garage2.DataAccess
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<VehicleType> VehicleTypes { get; set; }
         public DbSet<Parking> Parkings { get; set; }
+        public DbSet<Owner> Owners { get; set; }
 
         public GarageContext() : base("garage2") { }
     }
