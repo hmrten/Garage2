@@ -85,6 +85,7 @@ namespace Garage2.Controllers
 			ViewBag.DateOutSortParm = sortOrder == "DateOut" ? "DateOut_desc" : "DateOut";
 			ViewBag.DurationSortParm = sortOrder == "Duration" ? "Duration_desc" : "Duration";
 
+
             /*var TypeList = new List<string>();
 
 			TypeList.Add("Show All");
