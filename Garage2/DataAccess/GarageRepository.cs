@@ -36,17 +36,17 @@ namespace Garage2.DataAccess
         {
             get
             {
-                var seq = from vehicles in db.Vehicles
-                          join parkings in db.Parkings
-                          on vehicles.Reg equals parkings.VehicleReg
+                var seq = from v in db.Vehicles
+                          join p in db.Parkings
+                          on v.Reg equals p.VehicleReg
                           select new Overview
                           {
-                              VehicleReg = vehicles.Reg,
-                              ParkingSlotId = parkings.ParkingSlotId,
-                              DateIn = parkings.DateIn,
-                              DateOut = parkings.DateOut,
-                              Type = vehicles.Type.Name,
-                              Owner = vehicles.Owner
+                              VehicleReg = v.Reg,
+                              ParkingSlotId = p.ParkingSlotId,
+                              DateIn = p.DateIn,
+                              DateOut = p.DateOut,
+                              Type = v.Type.Name,
+                              OwnerName = v.OwnerInfo.Name
                           };
                 return seq;
             }
@@ -69,7 +69,7 @@ namespace Garage2.DataAccess
             if (!String.IsNullOrEmpty(searchString))
             {
                 var str = searchString.ToLower();
-                seq = seq.Where(s => s.Owner.ToLower().Contains(str) || s.VehicleReg.ToLower().Contains(str));
+                seq = seq.Where(s => s.OwnerName.ToLower().Equals(str) || s.VehicleReg.ToLower().Equals(str));
             }
 
             if (sortOrder == null)

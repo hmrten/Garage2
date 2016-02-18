@@ -21,6 +21,13 @@ namespace Garage2.Migrations
                 new VehicleType { Name = "Bus" },
                 new VehicleType { Name = "Truck" }
                 );
+
+            context.Owners.AddOrUpdate(o => o.Name,
+                new Owner { Name = "Bob" },
+                new Owner { Name = "John Smith" },
+                new Owner { Name = "Jane Doe" }
+                );
+
             context.SaveChanges();
         }
     }

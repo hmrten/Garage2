@@ -183,6 +183,7 @@
       <DependentUpon>201602171410013_model25.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Owner.cs" />
     <Compile Include="Models\VehicleType.cs" />
     <Compile Include="ViewModels\Overview.cs" />
     <Compile Include="Models\Parking.cs" />
