@@ -41,18 +41,15 @@ namespace Garage2.DataAccess
         {
             get
             {
-                var seq = from v in db.Vehicles
+				var seq = from v in db.Vehicles
                           join p in db.Parkings
                           on v.Reg equals p.VehicleReg
-                          select new Overview
-                          {
-                              VehicleReg = v.Reg,
-                              ParkingSlotId = p.ParkingSlotId,
-                              DateIn = p.DateIn,
-                              DateOut = p.DateOut,
-                              Type = v.Type.Name,
-                              OwnerName = v.OwnerInfo.Name
-                          };
+                          join u in db.Owners
+						  on v.OwnerId equals u.Id
+						  select new Overview
+						  {
+							  OwnerName = v.OwnerInfo.Name
+						  };
                 return seq;
             }
         }
