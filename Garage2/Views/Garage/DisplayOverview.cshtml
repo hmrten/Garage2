@@ -10,7 +10,7 @@
     <p>
         Search Owner or RegNr: @Html.TextBox("searchString") <br />
         <br/>
-        Filter: @Html.DropDownList("TypeFilter", ViewBag.TypeList as IEnumerable<SelectListItem>)
+        <input id="VehFilter" name="VehFilter" type="checkbox" value="true" /> Apply vehicle type filter [Checked = Yes] Filter: @Html.DropDownList("TypeFilter", ViewBag.TypeList as IEnumerable<SelectListItem>)
         <br />
         <br />
         <input id="DateinFilter" name="DateinFilter" type="checkbox" value="true" /> Apply filter over current date! [Checked = Yes]
@@ -28,7 +28,7 @@
             @Html.ActionLink("Type", "DisplayOverview", new { sortOrder = ViewBag.TypeSortParm })
         </th>
         <th>
-            @Html.ActionLink("Owner", "DisplayOverview", new { sortOrder = ViewBag.OwnSortParm })
+            @Html.ActionLink("OwnerName", "DisplayOverview", new { sortOrder = ViewBag.OwnSortParm })
         </th>
         <th>
             @Html.ActionLink("VehicleReg", "DisplayOverview", new { sortOrder = ViewBag.RegSortParm })
@@ -54,7 +54,7 @@
             @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Owner)
+            @Html.DisplayFor(modelItem => item.OwnerName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.VehicleReg)

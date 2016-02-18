@@ -35,6 +35,11 @@ namespace Garage2.Controllers
             return View(repo.Parkings);
         }
 
+        public ActionResult Owners()
+        {
+            return View(repo.Owners);
+        }
+
         // GET: Items/Park
         public ActionResult Register()
         {
@@ -107,9 +112,9 @@ namespace Garage2.Controllers
             return RedirectToAction("DisplayOverview");
         }
 
-		public ActionResult DisplayOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter)
+		public ActionResult DisplayOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter, bool? VehFilter)
         {
-            // Default to sorting by parkign slot id
+            // Default to sorting by parking slot id
             sortOrder = sortOrder ?? "ParkingSlotId";
 
             // Update ViewBag
@@ -120,6 +125,7 @@ namespace Garage2.Controllers
 			ViewBag.DateInSortParm = sortOrder == "DateIn" ? "DateIn_desc" : "DateIn";
 			ViewBag.DateOutSortParm = sortOrder == "DateOut" ? "DateOut_desc" : "DateOut";
 			ViewBag.DurationSortParm = sortOrder == "Duration" ? "Duration_desc" : "Duration";
+
 
             /*var TypeList = new List<string>();
 
@@ -133,7 +139,7 @@ namespace Garage2.Controllers
 
             ViewBag.TypeList = repo.GetTypeList();
 
-            var filteredList = repo.FilteredOverview(searchString, sortOrder, TypeFilter, DateinFilter);
+            var filteredList = repo.FilteredOverview(searchString, sortOrder, TypeFilter, DateinFilter, VehFilter);
 
             return View(filteredList);
         }

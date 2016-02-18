@@ -9,26 +9,20 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Owner)
+            @Html.DisplayNameFor(model => model.Reg)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Reg)
         </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Owner)
+            @Html.DisplayFor(modelItem => item.Reg)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.VehicleTypeId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Reg)
         </td>
     </tr>
 }

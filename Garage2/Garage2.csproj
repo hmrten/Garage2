@@ -182,7 +182,12 @@
     <Compile Include="Migrations\201602171410013_model25.Designer.cs">
       <DependentUpon>201602171410013_model25.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602180829403_ownermodel.cs" />
+    <Compile Include="Migrations\201602180829403_ownermodel.Designer.cs">
+      <DependentUpon>201602180829403_ownermodel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Owner.cs" />
     <Compile Include="Models\VehicleType.cs" />
     <Compile Include="ViewModels\Overview.cs" />
     <Compile Include="Models\Parking.cs" />
@@ -234,6 +239,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Task Materials\garage2db.png" />
+    <Content Include="Task Materials\Garage2db_updated.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -252,14 +258,17 @@
     <Content Include="Views\Garage\Slots.cshtml" />
     <Content Include="Views\Garage\Vehicles.cshtml" />
     <Content Include="Views\Garage\Parkings.cshtml" />
+    <Content Include="Views\Garage\Park.cshtml" />
     <Content Include="Views\Garage\DisplayOverview.cshtml" />
     <Content Include="Views\Garage\Unpark.cshtml" />
-    <Content Include="Views\Garage\Register.cshtml" />
-    <Content Include="Views\Garage\Park.cshtml" />
+    <Content Include="Views\Garage\Owners.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201602171410013_model25.resx">
       <DependentUpon>201602171410013_model25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602180829403_ownermodel.resx">
+      <DependentUpon>201602180829403_ownermodel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

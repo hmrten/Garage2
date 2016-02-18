@@ -32,22 +32,31 @@ namespace Garage2.DataAccess
             get { return db.VehicleTypes; }
         }
 
+        public IEnumerable<Owner> Owners
+        {
+            get { return db.Owners; }
+        }
+
         public IEnumerable<Overview> CollatedOverview
         {
             get
             {
-                var seq = from vehicles in db.Vehicles
-                          join parkings in db.Parkings
-                          on vehicles.Reg equals parkings.VehicleReg
-                          select new Overview
-                          {
-                              VehicleReg = vehicles.Reg,
-                              ParkingSlotId = parkings.ParkingSlotId,
-                              DateIn = parkings.DateIn,
-                              DateOut = parkings.DateOut,
-                              Type = vehicles.Type.Name,
-                              Owner = vehicles.Owner
-                          };
+				var seq = from v in db.Vehicles
+                          join p in db.Parkings
+                          on v.Reg equals p.VehicleReg
+                          join o in db.Owners
+						  on v.OwnerId equals o.Id
+						  join t in db.VehicleTypes
+						  on v.VehicleTypeId equals t.Id
+						  select new Overview
+						  {
+							  VehicleReg = p.VehicleReg,
+							  ParkingSlotId = p.ParkingSlotId,
+							  DateIn = p.DateIn,
+							  DateOut = p.DateOut,
+							  Type = t.Name,
+							  OwnerName = o.Name					  
+						  };
                 return seq;
             }
         }
@@ -62,14 +71,14 @@ namespace Garage2.DataAccess
             return l;
         }
 
-        public IEnumerable<Overview> FilteredOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter)
+        public IEnumerable<Overview> FilteredOverview(string searchString, string sortOrder, string TypeFilter, bool? DateinFilter, bool? VehFilter)
         {
             var seq = CollatedOverview;
 
             if (!String.IsNullOrEmpty(searchString))
             {
                 var str = searchString.ToLower();
-                seq = seq.Where(s => s.Owner.ToLower().Contains(str) || s.VehicleReg.ToLower().Contains(str));
+                seq = seq.Where(s => s.OwnerName.ToLower().Equals(str) || s.VehicleReg.ToLower().Equals(str));
             }
 
             if (sortOrder == null)
@@ -91,13 +100,6 @@ namespace Garage2.DataAccess
                     seq = seq.OrderBy(x => prop.GetValue(x, null));
             }
 
-            if (TypeFilter != null && TypeFilter != "Show All")
-            {
-                seq = from v in seq
-                      where String.Compare(v.Type, TypeFilter, true) == 0
-                      select v;
-                //seq = seq.Where(s => s.Type == vt);
-            }
 
             if (DateinFilter != null)
             {
@@ -108,7 +110,22 @@ namespace Garage2.DataAccess
                 }
             }
 
-            return CalcDuration(seq);
+			if (VehFilter != null) 
+			{
+				if (VehFilter== true)
+				{
+                    if (TypeFilter != null)
+                    {
+                        var name = db.VehicleTypes.Find(int.Parse(TypeFilter)).Name;
+                        seq = seq.Where(o => o.Type == name);
+                        //seq = seq.Where(s => s.Type == vt);
+                    }
+					//seq = seq.Where(s => s.Type == TypeFilter.ToString());
+				}
+			}
+
+			return CalcDuration(seq);
+
         }
 
         public bool Register(Vehicle vehicle)

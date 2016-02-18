@@ -20,12 +20,12 @@ namespace Garage2.Models
         [Key, StringLength(50), Display(Name = "Registration number")]
         public string Reg { get; set; }
 
-        [Required, StringLength(100)]
-        public string Owner { get; set; }
+        [ForeignKey("OwnerInfo")]
+        public int OwnerId { get; set; }
+        public virtual Owner OwnerInfo { get; set; }
 
         [ForeignKey("Type")]
         public int VehicleTypeId { get; set; }
-
         public virtual  VehicleType Type { get; set; }
     }
 }
