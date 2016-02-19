@@ -137,13 +137,13 @@ namespace Garage2.DataAccess
             return true;
         }
 
-        public bool RegOwner(Owner owner)
+        public int RegOwner(Owner owner)
         {
 
             db.Owners.Add(owner);
             db.SaveChanges();
 
-            return true;
+            return owner.Id;
         }
 
         public bool Park(String reg)
@@ -160,6 +160,7 @@ namespace Garage2.DataAccess
             if (item != null && item2 != null)
             {
                 item2.Occupied = true;
+                item2.VehicleReg = reg;
 
                 db.Parkings.Add(new Parking
                 {
@@ -177,31 +178,6 @@ namespace Garage2.DataAccess
             return false;
         }
 
-
-        //public bool Park(Vehicle vehicle)
-        //{
-        //    var item = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
-
-        //    if (item != null)
-        //    {
-        //        item.Occupied = true;
-
-        //        db.Parkings.Add(new Parking
-        //        {
-        //            VehicleReg = vehicle.Reg,
-        //            ParkingSlotId = item.Id,
-        //            DateIn = DateTime.Today,
-        //            DateOut = null
-        //        });
-
-        //        db.Vehicles.Add(vehicle);
-        //        db.SaveChanges();
-
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
 
         public void Delete(int? id, int? psi, string reg)
         {

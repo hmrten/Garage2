@@ -40,24 +40,24 @@ namespace Garage2.Controllers
             return View(repo.Owners);
         }
 
-        // GET: Items/RegOwner
-        public ActionResult RegOwner()
-        {
-            return View();
-        }
+        //// GET: Items/RegOwner
+        //public ActionResult RegOwner()
+        //{
+        //    return View();
+        //}
 
-        // POST: Items/RegOwner
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RegOwner([Bind(Include = "Name")] Owner owner)
-        {
-            if (ModelState.IsValid)
-            {
-                repo.RegOwner(owner);
-                return RedirectToAction("Register");
-            }
-            return View();
-        }
+        //// POST: Items/RegOwner
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult RegOwner([Bind(Include = "Name")] Owner owner)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        repo.RegOwner(owner);
+        //        return RedirectToAction("Register");
+        //    }
+        //    return View();
+        //}
 
 
         // GET: Items/Register
@@ -67,18 +67,36 @@ namespace Garage2.Controllers
             return View();
         }
 
+
         // POST: Items/Register
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "Reg, VehicleTypeId, OwnerId")] Vehicle vehicle)
+        
+        public ActionResult Register(string reg, int vehicleTypeId, string name)
         {
-            if (ModelState.IsValid)
-            {
-                repo.Register(vehicle);
-                return RedirectToAction("Vehicles");
-            }
-            return View(vehicle);
+
+            int ownId = repo.RegOwner(new Owner { Name = name });
+
+            repo.Register(new Vehicle { OwnerId = ownId, Reg = reg, OwnerInfo = null, VehicleTypeId = vehicleTypeId });
+            return RedirectToAction("Park");
+         
+            //return View();
         }
+
+
+
+
+        //// POST: Items/Register
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Register([Bind(Include = "Reg, VehicleTypeId, OwnerId")] Vehicle vehicle)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        repo.Register(vehicle);
+        //        return RedirectToAction("Vehicles");
+        //    }
+        //    return View(vehicle);
+        //}
 
 
 

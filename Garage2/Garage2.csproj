@@ -259,7 +259,6 @@
     <Content Include="Views\Garage\Unpark.cshtml" />
     <Content Include="Views\Garage\Owners.cshtml" />
     <Content Include="Views\Garage\Register.cshtml" />
-    <Content Include="Views\Garage\RegOwner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
