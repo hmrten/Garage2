@@ -61,9 +61,10 @@ namespace Garage2.Controllers
 
 
         // GET: Items/Register
-        public ActionResult Register()
+        public ActionResult Register(string reg)
         {
             ViewBag.TypeList = repo.GetTypeList();
+            ViewBag.RegNumber = reg;
             return View();
         }
 
@@ -77,7 +78,7 @@ namespace Garage2.Controllers
             int ownId = repo.RegOwner(new Owner { Name = name });
 
             repo.Register(new Vehicle { OwnerId = ownId, Reg = reg, OwnerInfo = null, VehicleTypeId = vehicleTypeId });
-            return RedirectToAction("Park");
+            return RedirectToAction("Park", new { reg = reg });
          
             //return View();
         }
@@ -102,10 +103,22 @@ namespace Garage2.Controllers
 
 
         // GET: Items/Park
-        public ActionResult Park()
+        public ActionResult Park(string reg = "", int x = 0)
         {
+            
+            ViewBag.RegNumber = reg;
+           
             return View();
         }
+
+        //// GET: Items/Park
+        //public ActionResult Park()
+        //{
+
+        //    ViewBag.RegNumber = "";
+
+        //    return View();
+        //}
 
         // POST: Items/Park
         [HttpPost]
@@ -115,9 +128,12 @@ namespace Garage2.Controllers
             if (ModelState.IsValid)
             {
                 if (!repo.Park(reg))
-                    return RedirectToAction("Register");
+                {
+                    ViewBag.RegNumber = reg;
+                    return RedirectToAction("Register", new { reg = reg });
+                }
             }
-            return RedirectToAction("Slots");
+            return RedirectToAction("DisplayOverview");
         }
 
 
