@@ -173,7 +173,7 @@ namespace Garage2.Controllers
 
             // Update ViewBag
             ViewBag.TypeSortParm = sortOrder == "Type" ? "Type_desc" : "Type";
-            ViewBag.OwnSortParm = sortOrder == "Owner" ? "Owner_desc" : "Owner";
+            ViewBag.OwnSortParm = sortOrder == "OwnerName" ? "OwnerName_desc" : "OwnerName";
 			ViewBag.RegSortParm = sortOrder == "VehicleReg" ? "VehicleReg_desc" : "VehicleReg";
 			ViewBag.PIDSortParm = sortOrder == "ParkingSlotId" ? "ParkingSlotId_desc" : "ParkingSlotId";
 			ViewBag.DateInSortParm = sortOrder == "DateIn" ? "DateIn_desc" : "DateIn";
