@@ -165,7 +165,7 @@ namespace Garage2.DataAccess
                 {
                     VehicleReg = reg,
                     ParkingSlotId = item2.Id,
-                    DateIn = DateTime.Today,
+                    DateIn = DateTime.Now,
                     DateOut = null
                 });
 
