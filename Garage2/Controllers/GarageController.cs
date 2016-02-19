@@ -40,6 +40,26 @@ namespace Garage2.Controllers
             return View(repo.Owners);
         }
 
+        // GET: Items/RegOwner
+        public ActionResult RegOwner()
+        {
+            return View();
+        }
+
+        // POST: Items/RegOwner
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegOwner([Bind(Include = "Name")] Owner owner)
+        {
+            if (ModelState.IsValid)
+            {
+                repo.RegOwner(owner);
+                return RedirectToAction("Register");
+            }
+            return View();
+        }
+
+
         // GET: Items/Register
         public ActionResult Register()
         {

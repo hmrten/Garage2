@@ -24,7 +24,7 @@ namespace Garage2.Models
         public int OwnerId { get; set; }
         public virtual Owner OwnerInfo { get; set; }
 
-        [ForeignKey("Type")]
+        [ForeignKey("Type"), Display(Name = "Vehicle Type")]
         public int VehicleTypeId { get; set; }
         public virtual  VehicleType Type { get; set; }
     }

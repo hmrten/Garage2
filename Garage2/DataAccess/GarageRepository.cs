@@ -137,7 +137,14 @@ namespace Garage2.DataAccess
             return true;
         }
 
+        public bool RegOwner(Owner owner)
+        {
 
+            db.Owners.Add(owner);
+            db.SaveChanges();
+
+            return true;
+        }
 
         public bool Park(String reg)
         {
@@ -145,6 +152,11 @@ namespace Garage2.DataAccess
 
             var item2 = db.ParkingSlots.FirstOrDefault(i => i.Occupied == false);
 
+            bool parked = db.ParkingSlots.Any(i => i.VehicleReg == reg);
+
+            if (parked)
+                return true;
+	        
             if (item != null && item2 != null)
             {
                 item2.Occupied = true;
