@@ -41,22 +41,17 @@ namespace Garage2.DataAccess
         {
             get
             {
-				var seq = from v in db.Vehicles
-                          join p in db.Parkings
-                          on v.Reg equals p.VehicleReg
-                          join o in db.Owners
-						  on v.OwnerId equals o.Id
-						  join t in db.VehicleTypes
-						  on v.VehicleTypeId equals t.Id
-						  select new Overview
-						  {
-							  VehicleReg = p.VehicleReg,
-							  ParkingSlotId = p.ParkingSlotId,
-							  DateIn = p.DateIn,
-							  DateOut = p.DateOut,
-							  Type = t.Name,
-							  OwnerName = o.Name					  
-						  };
+                var seq = from v in db.Vehicles.Include("Type").Include("OwnerInfo")
+                          join p in db.Parkings on v.Reg equals p.VehicleReg
+                          select new Overview
+                          {
+                              VehicleReg = v.Reg,
+                              ParkingSlotId = p.ParkingSlotId,
+                              DateIn = p.DateIn,
+                              DateOut = p.DateOut,
+                              Type = v.Type.Name,
+                              OwnerName = v.OwnerInfo.Name
+                          };
                 return seq;
             }
         }
@@ -64,10 +59,7 @@ namespace Garage2.DataAccess
         private List<Overview> CalcDuration(IEnumerable<Overview> seq)
         {
             var l = seq.ToList();
-            for (int i = 0; i < l.Count; ++i)
-            {
-                l[i].Duration = l[i].DateOut - l[i].DateIn;
-            }
+            l.ForEach(o => o.Duration = o.DateOut - o.DateIn);
             return l;
         }
 
@@ -110,21 +102,21 @@ namespace Garage2.DataAccess
                 }
             }
 
-			if (VehFilter != null) 
-			{
-				if (VehFilter== true)
-				{
+            if (VehFilter != null)
+            {
+                if (VehFilter == true)
+                {
                     if (TypeFilter != null)
                     {
                         var name = db.VehicleTypes.Find(int.Parse(TypeFilter)).Name;
                         seq = seq.Where(o => o.Type == name);
                         //seq = seq.Where(s => s.Type == vt);
                     }
-					//seq = seq.Where(s => s.Type == TypeFilter.ToString());
-				}
-			}
+                    //seq = seq.Where(s => s.Type == TypeFilter.ToString());
+                }
+            }
 
-			return CalcDuration(seq);
+            return CalcDuration(seq);
 
         }
 
@@ -156,7 +148,7 @@ namespace Garage2.DataAccess
 
             if (parked)
                 return true;
-	        
+
             if (item != null && item2 != null)
             {
                 item2.Occupied = true;
